@@ -3,14 +3,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const userInput = document.getElementById("user-input");
   const chatBox = document.getElementById("chat-box");
 
-  userInput.addEventListener("keydown", () => {
+  userInput.addEventListener("keydown", (e) => {
     userInput.classList.add("typing");
+
+    // Enter = kirim, Shift+Enter = baris baru
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      chatForm.requestSubmit(); // kirim form
+    }
   });
 
   userInput.addEventListener("keyup", () => {
-    if (!userInput.value) {
-      userInput.classList.remove("typing"); // hilang kalau input kosong
-    }
+    if (!userInput.value) userInput.classList.remove("typing");
   });
 
   const addMessage = (text, sender = "user") => {
@@ -37,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const userMessageText = userInput.value.trim();
     if (!userMessageText) return;
 
-    // user message
     addMessage(userMessageText, "user");
     userInput.value = "";
     userInput.classList.remove("typing");
@@ -69,7 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await response.json();
 
-      //spinner
       botMessageElement.classList.remove("typing");
       botMessageElement.textContent = data?.response
         ? `Sasy Bot: ${data.response}`
@@ -83,4 +85,34 @@ document.addEventListener("DOMContentLoaded", () => {
       chatBox.scrollTop = chatBox.scrollHeight;
     }
   });
+
+  // Lottie
+  const lottieEl = document.getElementById("floating-lottie");
+  lottie.loadAnimation({
+    container: lottieEl,
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    path: "Loading animation.json",
+  });
+
+  let x = Math.random() * (window.innerWidth - lottieEl.offsetWidth);
+  let y = Math.random() * (window.innerHeight - lottieEl.offsetHeight);
+  let dx = 2 + Math.random() * 3;
+  let dy = 2 + Math.random() * 3;
+
+  function animateLottie() {
+    x += dx;
+    y += dy;
+
+    if (x <= 0 || x >= window.innerWidth - lottieEl.offsetWidth) dx *= -1;
+    if (y <= 0 || y >= window.innerHeight - lottieEl.offsetHeight) dy *= -1;
+
+    lottieEl.style.left = x + "px";
+    lottieEl.style.top = y + "px";
+
+    requestAnimationFrame(animateLottie);
+  }
+
+  animateLottie();
 });
