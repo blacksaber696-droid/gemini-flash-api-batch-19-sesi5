@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gemini AI Chatbot</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- Lottie Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.1/lottie.min.js"></script>
+    <style>
+      .floating-lottie {
+        position: absolute;
+        bottom: 80px;
+        left: 20px;
+        width: 100px;
+        height: 100px;
+        pointer-events: none;
+        z-index: 10;
+      }
+
+      .container {
+        position: relative;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Sassy AI Chatbot</h1>
+
+      <div id="chat-box" class="chat-box"></div>
+
+      <!-- Floating Lottie -->
+      <div id="floating-lottie" class="floating-lottie"></div>
+
+      <form id="chat-form">
+        <input
+          type="text"
+          id="user-input"
+          placeholder="Type your annoying prompt..or..dont.."
+          autocomplete="off"
+          required
+        />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+
+    <!-- Script untuk memuat Lottie -->
+    <script>
+      lottie.loadAnimation({
+        container: document.getElementById("floating-lottie"),
+        renderer: "svg",
+        loop: true,
+        autoplay: true,
+        path: "Loading animation.json",
+      });
+    </script>
+
+    <script src="script.js"></script>
+  </body>
+</html>
